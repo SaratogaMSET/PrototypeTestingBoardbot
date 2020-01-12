@@ -42,7 +42,7 @@ public class Drivetrain extends Subsystem{
         //LeftMotorFollower.follow(LeftMotor);
         //RightMotorFollower.follow(RightMotor);
 
-        rightMotor.setInverted(true);
+        leftMotor.setInverted(false);
         feeder.setInverted(true);
 
     }
