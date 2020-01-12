@@ -11,30 +11,28 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.*;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.TankDrive;
 
 /**
  * Add your docs here.
  */
-public class Drivebase extends Subsystem{
-    private TalonSRX LeftMotor;
+public class Drivetrain extends Subsystem{
+    private TalonSRX leftMotor;
     //private TalonSRX LeftMotorFollower;
-    private TalonSRX RightMotor;
+    private TalonSRX rightMotor;
     //private TalonSRX RightMotorFollower;
 
-    public Drivebase() {
-        LeftMotor = new TalonSRX(RobotMap.LEFT_MOTOR.value);
-        RightMotor = new TalonSRX(RobotMap.RIGHT_MOTOR.value);
+    public Drivetrain() {
+        leftMotor = new TalonSRX(RobotMap.LEFT_MOTOR.value);
+        rightMotor = new TalonSRX(RobotMap.RIGHT_MOTOR.value);
         //RightMotorFollower = new TalonSRX(RobotMap.RIGHT_FOLLOW_MOTOR.value);
         //LeftMotorFollower = new Talon
-        Robot.initTalon(LeftMotor);
-        Robot.initTalon(RightMotor);
-        LeftMotor.setNeutralMode(NeutralMode.Brake);
-        RightMotor.setNeutralMode(NeutralMode.Brake);
+        Robot.initTalon(leftMotor);
+        Robot.initTalon(rightMotor);
+        leftMotor.setNeutralMode(NeutralMode.Brake);
+        rightMotor.setNeutralMode(NeutralMode.Brake);
 
         //Robot.initTalon(LeftMotorFollower);
         //Robot.initTalon(RightMotorFollower);
@@ -42,13 +40,13 @@ public class Drivebase extends Subsystem{
         //LeftMotorFollower.follow(LeftMotor);
         //RightMotorFollower.follow(RightMotor);
 
-        RightMotor.setInverted(true);
+        rightMotor.setInverted(true);
 
     }
 
     public void set( ControlMode mode, double leftvalue, double rightvalue){
-        LeftMotor.set(mode, leftvalue);
-        RightMotor.set(mode, leftvalue);
+        leftMotor.set(mode, leftvalue);
+        rightMotor.set(mode, leftvalue);
     }
 
     protected void initDefaultCommand() {
