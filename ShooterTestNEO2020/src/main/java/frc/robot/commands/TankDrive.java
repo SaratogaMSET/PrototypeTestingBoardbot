@@ -10,6 +10,7 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 /**
@@ -29,6 +30,8 @@ public class TankDrive extends Command {
         double throttle = (1.0 - Robot.oi.LEFT_JOY.getThrottle())/-2.0;
 
         Robot.drivebase.set(ControlMode.PercentOutput, Robot.oi.getLeftJoyY()*throttle, Robot.oi.getRightJoyY()*throttle);
+
+        
     }
     protected boolean isFinished(){
         return false;

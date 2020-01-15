@@ -13,7 +13,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -24,6 +26,9 @@ public class Drivetrain extends Subsystem{
     private TalonSRX feeder;
     private CANSparkMax leftMotor;
     private CANSparkMax rightMotor;
+    private double batteryVoltage = 0.0;
+    private double voltUsage = .7;
+    private double power = .1;
     //private TalonSRX RightMotorFollower;
 
     public Drivetrain() {
@@ -34,6 +39,8 @@ public class Drivetrain extends Subsystem{
         //LeftMotorFollower = new Talon
         Robot.initTalon(feeder);
         feeder.setNeutralMode(NeutralMode.Brake);
+        leftMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         leftMotor.clearFaults();
         rightMotor.clearFaults();
         //Robot.initTalon(LeftMotorFollower);
@@ -42,15 +49,42 @@ public class Drivetrain extends Subsystem{
         //LeftMotorFollower.follow(LeftMotor);
         //RightMotorFollower.follow(RightMotor);
 
-        rightMotor.setInverted(true);
-        feeder.setInverted(true);
+        leftMotor.setInverted(false);
+        feeder.setInverted(false);
 
     }
 
     public void set( ControlMode mode, double leftvalue, double rightvalue){
+        
+        
         leftMotor.set(leftvalue);
         rightMotor.set(leftvalue);
         feeder.set(mode, leftvalue);
+
+        if(leftvalue < .1 && leftvalue > -0.1){
+            batteryVoltage = new PowerDistributionPanel(0).getVoltage();
+        }
+
+        // if(batteryVoltage - (new PowerDistributionPanel(0).getVoltage()) < voltUsage){
+        //     power *= 2;
+        // } else if (batteryVoltage - (new PowerDistributionPanel(0).getVoltage()) > voltUsage){
+        //     power /= 2;
+        // }
+
+        leftMotor.setSmartCurrentLimit(10);
+        rightMotor.setSmartCurrentLimit(10);
+
+        // leftMotor.set(power);
+        // rightMotor.set(power);
+        // feeder.set(mode, power);
+
+        // SmartDashboard.putNumber("Current leftMotor", new PowerDistributionPanel(0).getCurrent(0));
+        // SmartDashboard.putNumber("Current rightMotor", new PowerDistributionPanel(0).getCurrent(1));
+        // SmartDashboard.putNumber("Current feeder", new PowerDistributionPanel(0).getCurrent(15));
+        // SmartDashboard.putNumber("Total drawage", new PowerDistributionPanel(0).getCurrent(1)+  new PowerDistributionPanel(0).getCurrent(0) + new PowerDistributionPanel(0).getCurrent(15));
+        SmartDashboard.putNumber("battery voltage", (new PowerDistributionPanel(0).getVoltage()));
+        SmartDashboard.putNumber("Total voltage drawn", batteryVoltage - (new PowerDistributionPanel(0).getVoltage()));
+
     }
 
     protected void initDefaultCommand() {
