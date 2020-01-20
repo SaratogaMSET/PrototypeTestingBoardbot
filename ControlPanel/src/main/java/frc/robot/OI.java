@@ -25,10 +25,6 @@ public class OI {
     return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
   }
 
-  public boolean getLeftButton(int button) {
-    return LEFT_JOY.getRawButtonPressed(button);
-   }
-
   public double getLeftJoyY() {
     double raw = LEFT_JOY.getY();
     return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
