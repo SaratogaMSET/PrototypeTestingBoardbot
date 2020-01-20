@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.DriverStation;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -120,7 +122,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Color currentColor = colorSensor.getColor();
-    if(colorString.equals("Red"))
+
+    String fms = getFMSData();
+    if(colorString.equals(fms))
       speed = 0;
     else
       speed = 0.3;
@@ -131,13 +135,13 @@ public class Robot extends TimedRobot {
     double confidence = match.confidence;
 
     if (match.color == BLUE_TARGET) {
-      currentColorString = "Blue";
+      currentColorString = "B";
     } else if (match.color == RED_TARGET) {
-      currentColorString = "Red";
+      currentColorString = "R";
     } else if (match.color == GREEN_TARGET) {
-      currentColorString = "Green";
+      currentColorString = "G";
     } else if (match.color == YELLOW_TARGET) {
-      currentColorString = "Yellow";
+      currentColorString = "Y";
     } else {
       currentColorString = "Unknown";
     }
@@ -154,6 +158,35 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Detected Color", colorString);
     SmartDashboard.putNumber("Confidence", confidence);
     SmartDashboard.putNumber("Color Changes", colorChanges);
+    SmartDashboard.putString("FMS Data", fms);
+  }
+
+  public String getFMSData(){
+    String gameData;
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0){
+      return Character.toString(gameData.charAt(0));
+      // switch (gameData.charAt(0))
+      // {
+      //   case 'B' :
+      //     //Blue case code
+      //     break;
+      //   case 'G' :
+      //     //Green case code
+      //     break;
+      //   case 'R' :
+      //     //Red case code
+      //     break;
+      //   case 'Y' :
+      //     //Yellow case code
+      //     break;
+      //   default :
+      //     //This is corrupt data
+      //     break;
+      //}
+    } else {
+      return "Unknown";
+    }
   }
 
   /**
