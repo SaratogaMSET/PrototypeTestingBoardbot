@@ -198,7 +198,7 @@ public class Robot extends TimedRobot {
 
 
   public static void initTalon (TalonSRX motor) {
-    motor.setNeutralMode(NeutralMode.Coast);
+    motor.setNeutralMode(NeutralMode.Brake);
     motor.neutralOutput();
     motor.setSensorPhase(false);
     motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
