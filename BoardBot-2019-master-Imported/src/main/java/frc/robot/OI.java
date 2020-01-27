@@ -40,6 +40,10 @@ public class OI {
     double raw = RIGHT_JOY.getY();
     return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
   }
+  public boolean getLeftJoyButtons(int buttonNum) {
+    boolean raw = LEFT_JOY.getRawButton(buttonNum);
+    return raw;
+  }
 
   public OI(){
 
