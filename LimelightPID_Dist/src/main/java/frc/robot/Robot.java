@@ -11,14 +11,9 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExecuteSubsystems;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.GyroSubsystem;
@@ -33,6 +28,7 @@ import frc.robot.subsystems.Turn90Test;
  * project.
  */
 public class Robot extends TimedRobot {
+  private static final ExecuteSubsystems EXECUTE_SUBSYSTEMS = new ExecuteSubsystems();
   public static OI oi;
   public static Drivebase drivebase;
   public static Turn90Test turnTest;
@@ -73,7 +69,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     gyro.reset();
-    new ExecuteSubsystems().start();
+    EXECUTE_SUBSYSTEMS.start();
   }
 
   @Override
