@@ -70,7 +70,8 @@ public class ExecuteSubsystems extends Command{
         double a2 = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
         double LLVisible = tv.getDouble(0.0);
-        double d = ((h2-h1) / Math.tan(Math.toRadians(Math.abs(a1+a2))));
+        double dLeg = ((h2-h1) / Math.tan(Math.toRadians(Math.abs(a1+a2))));
+        double dHypo = dLeg/Math.cos(Math.toRadians(x));
         //post to smart dashboard periodically
 
         SmartDashboard.putNumber("LimelightX", x);
@@ -79,7 +80,8 @@ public class ExecuteSubsystems extends Command{
         SmartDashboard.putNumber("Limelight Visible?", LLVisible);
         SmartDashboard.putNumber("TotalAngle", Math.abs(a1+a2));
         SmartDashboard.putNumber("height", h2-h1);
-        SmartDashboard.putNumber("Distance", d);
+        SmartDashboard.putNumber("Straight ahead distance", dLeg);
+        SmartDashboard.putNumber("Final Dist to Target", dHypo);
 
 
 
