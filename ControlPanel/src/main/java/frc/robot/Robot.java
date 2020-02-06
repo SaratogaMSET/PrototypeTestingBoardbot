@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
 
   private String colorString;
   private double colorChanges;
+  private double colorCycles;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -68,6 +69,7 @@ public class Robot extends TimedRobot {
 
     colorString = "Unknown";
     colorChanges = 0;
+    colorCycles = 0;
   }
 
   /**
@@ -149,6 +151,18 @@ public class Robot extends TimedRobot {
     if (!currentColorString.equals(colorString) && !currentColorString.equals("Unknown") && confidence > 0.95) {
       colorChanges++;
     }
+    // if(currentColorString.equals("R")){
+    //   colorCycles++;
+    // }
+    // if(currentColorString.equals("Y")){
+    //   colorCycles++;
+    // }
+    // if(currentColorString.equals("B")){
+    //   colorCycles++;
+    // }
+    // if(currentColorString.equals("G")){
+    //   colorCycles++;
+    // }
 
     colorString = currentColorString;
 
@@ -159,6 +173,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Confidence", confidence);
     SmartDashboard.putNumber("Color Changes", colorChanges);
     SmartDashboard.putString("FMS Data", fms);
+    SmartDashboard.putNumber("Color Cycles", colorCycles/4);
   }
 
   public String getFMSData(){
